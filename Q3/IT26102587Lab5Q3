@@ -1,0 +1,49 @@
+import java.util.Scanner;
+
+public class IT026102587Lab5Q3 {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        final double ROOM_CHARGE_PER_DAY = 48000.00;
+        final double DISCOUNT_3_TO_4_DAYS = 0.10;
+        final double DISCOUNT_5_OR_MORE_DAYS = 0.20;
+
+        System.out.print("Enter start date (day): ");
+        int startDay = input.nextInt();
+
+        System.out.print("Enter end date (day): ");
+        int endDay = input.nextInt();
+
+        if (startDay < 1 || startDay > 31 || endDay < 1 || endDay > 31) {
+            System.out.println("Error: Start date and end date must be between 1 and 31.");
+            input.close();
+            return;
+        }
+
+        if (startDay >= endDay) {
+            System.out.println("Error: Start date must be less than end date.");
+            input.close();
+            return;
+        }
+
+        int daysReserved = endDay - startDay;
+        double discountRate = 0.0;
+
+        if (daysReserved >= 3 && daysReserved <= 4) {
+            discountRate = DISCOUNT_3_TO_4_DAYS;
+        } else if (daysReserved >= 5) {
+            discountRate = DISCOUNT_5_OR_MORE_DAYS;
+        }
+
+        double totalBeforeDiscount = daysReserved * ROOM_CHARGE_PER_DAY;
+        double discountAmount = totalBeforeDiscount * discountRate;
+        double totalToPay = totalBeforeDiscount - discountAmount;
+
+        System.out.println("Number of days reserved: " + daysReserved);
+        System.out.printf("Total before discount: Rs. %.2f%n", totalBeforeDiscount);
+        System.out.printf("Discount: %.0f%%%n", discountRate * 100);
+        System.out.printf("Total amount to be paid: Rs. %.2f%n", totalToPay);
+
+        input.close();
+    }
+}
